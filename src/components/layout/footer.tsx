@@ -6,6 +6,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ChevronDown } from "lucide-react";
 import { useFontStore } from "@/hooks/use-font-store";
 import { type Font } from "@/types";
+import { Slider } from "../ui/slider";
+import { useFontSizeStore } from "@/hooks/use-font-size";
 
 const capitalize = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -16,6 +18,7 @@ type Theme = "light" | "dark" | "sepia";
 export function Footer() {
     const { theme, setTheme } = useTheme();
     const { font, setFont } = useFontStore();
+    const { fontSize, setFontSize } = useFontSizeStore();
     const myThemes: Theme[] = ["light", "dark", "sepia"];
     const myFonts: Font[] = ["sans", "serif", "mono"];
 
@@ -81,6 +84,19 @@ export function Footer() {
                     )}
                 </DropdownMenuContent>
             </DropdownMenu>
+            <div className="flex items-center gap-x-2">
+                <Slider
+                    defaultValue={[fontSize]}
+                    onValueChange={(value) => setFontSize(value[0])}
+                    max={32}
+                    min={12}
+                    step={1}
+                    className="w-24"
+                />
+                <span className="text-sm text-muted-foreground">
+                    {fontSize} px
+                </span>
+            </div>
         </footer>
     );
 }
