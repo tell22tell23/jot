@@ -1,12 +1,15 @@
 "use client";
 
-import { useFontSizeStore } from "@/hooks/use-font-size";
-import { useFontStore } from "@/hooks/use-font-store";
+import { useFontSize } from "@/hooks/use-font-size";
+import { useFont } from "@/hooks/use-font";
 import { cn } from "@/lib/utils";
+import { useFileStore } from "@/hooks/use-file-store";
 
 export default function Textarea() {
-    const { font } = useFontStore();
-    const { fontSize } = useFontSizeStore();
+    const { font } = useFont();
+    const { fontSize } = useFontSize();
+    const { setFileContent, getFileContent } = useFileStore();
+    const file = getFileContent("current-file-id"); // Replace with actual file ID logic
 
     return (
         <div className="overflow-hidden h-full">
@@ -21,6 +24,11 @@ export default function Textarea() {
                     </div>
                 </div>
                 <textarea
+                    value={file?.content || ""}
+                    onChange={(e) => {
+                        const content = e.target.value;
+                        setFileContent(file.id, { ...file, content });
+                    }}
                     style={{
                         fontFamily:
                         font === "sans"

@@ -2,12 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
-import { useFontStore } from "@/hooks/use-font-store";
+import { useFont } from "@/hooks/use-font";
 import { type Font } from "@/types";
 import { Slider } from "../ui/slider";
-import { useFontSizeStore } from "@/hooks/use-font-size";
+import { useFontSize } from "@/hooks/use-font-size";
 
 const capitalize = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -17,8 +22,8 @@ type Theme = "light" | "dark" | "sepia";
 
 export function Footer() {
     const { theme, setTheme } = useTheme();
-    const { font, setFont } = useFontStore();
-    const { fontSize, setFontSize } = useFontSizeStore();
+    const { font, setFont } = useFont();
+    const { fontSize, setFontSize } = useFontSize();
     const myThemes: Theme[] = ["light", "dark", "sepia"];
     const myFonts: Font[] = ["sans", "serif", "mono"];
 

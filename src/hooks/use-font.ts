@@ -7,7 +7,7 @@ interface FontState {
     setFont: (font: Font) => void;
 }
 
-export const useFontStore = create<FontState>()(
+export const useFont = create<FontState>()(
     persist(
         (set) => ({
             font: "sans",

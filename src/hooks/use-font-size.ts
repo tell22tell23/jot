@@ -6,7 +6,7 @@ interface FontSizeState {
     setFontSize: (size: number) => void;
 }
 
-export const useFontSizeStore = create<FontSizeState>()(
+export const useFontSize = create<FontSizeState>()(
     persist(
         (set) => ({
             fontSize: 18,
