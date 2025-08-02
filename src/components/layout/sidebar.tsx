@@ -2,15 +2,14 @@
 
 import { useFileStore } from "@/hooks/use-file-store";
 import { Button } from "../ui/button";
-import { CirclePlus, EllipsisVertical, File } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { CirclePlus, File } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { EditMenu } from "../edit-menu";
 
 export function Sidebar() {
     const {
         createFile,
         getFileList,
-        deleteFile,
         currentFileId,
         setCurrentFileId,
     } = useFileStore();
@@ -38,24 +37,7 @@ export function Sidebar() {
                                 />
                                 <span className="truncate">{file.title}</span>
                             </div>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger
-                                    asChild
-                                    onClick={(e) => e.stopPropagation()}
-                                >
-                                    <div className="hover:bg-gray-100 dark:hover:bg-accent p-1 rounded">
-                                    <EllipsisVertical className="size-3 text-muted-foreground" />
-                                    </div>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent>
-                                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                                    <DropdownMenuItem
-                                        onClick={() => deleteFile(file.id)}
-                                    >
-                                        Delete
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                            <EditMenu file={file} />
                         </Button>
                     ))
                     : (

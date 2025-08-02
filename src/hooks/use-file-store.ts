@@ -34,7 +34,9 @@ interface FileStore {
     getFileContent: (fileId: string) => File | null;
     getFileList: () => FileMeta[];
     createFile: () => void;
+    renameFile: (fileId: string, newTitle: string) => void;
     deleteFile: (fileId: string) => void;
+    fileExists: (title: string) => boolean;
 }
 
 export const useFileStore = create<FileStore>()(
@@ -97,11 +99,38 @@ export const useFileStore = create<FileStore>()(
                     },
                 }));
             },
+            renameFile: (fileId, newTitle) => {
+                const fileContent = get().getFileContent(fileId);
+                if (!fileContent) return;
+
+                const updatedFile: File = {
+                    ...fileContent,
+                    title: newTitle,
+                    updatedAt: Date.now(),
+                };
+                const compressedContent = compressToUTF16(JSON.stringify(updatedFile));
+                set((state) => ({
+                    files: {
+                        ...state.files,
+                        [fileId]: compressedContent,
+                    },
+                }));
+            },
             deleteFile: (fileId) => {
                 set((state) => {
                     const { [fileId]: _, ...remainingFiles } = state.files;
                     return { files: remainingFiles };
                 });
+            },
+            fileExists: (title: string) => {
+                const files = Object.values(get().files)
+                .map((compressed) => {
+                    const json = decompressFromUTF16(compressed);
+                    return json ? JSON.parse(json) : null;
+                })
+                .filter(Boolean);
+
+                return files.some((file) => file.title === title);
             },
         }),
         {
