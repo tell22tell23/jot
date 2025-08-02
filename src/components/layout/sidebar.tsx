@@ -25,17 +25,19 @@ export function Sidebar() {
                             key={file.id}
                             variant="ghost"
                             onClick={() => setCurrentFileId(file.id)}
-                            className="hover:bg-none dark:hover:bg-none flex items-center justify-start rounded-sm gap-x-4 text-sm"
+                            className="hover:bg-none dark:hover:bg-none px-3 flex items-center justify-between rounded-sm text-sm"
                         >
-                            <File
-                                className={
-                                    cn(
-                                        "size-3 text-muted-foreground",
-                                        file.id === currentFileId ? "text-indigo-700" : ""
-                                    )
-                                }
-                            />
-                            <span className="truncate">{file.title}</span>
+                            <div className="flex items-center gap-x-4">
+                                <File
+                                    className={
+                                        cn(
+                                            "size-3 text-muted-foreground",
+                                            file.id === currentFileId ? "text-indigo-700" : ""
+                                        )
+                                    }
+                                />
+                                <span className="truncate">{file.title}</span>
+                            </div>
                             <DropdownMenu>
                                 <DropdownMenuTrigger
                                     asChild
@@ -63,7 +65,7 @@ export function Sidebar() {
                     )}
                 <Button
                     variant="ghost"
-                    className="flex items-center justify-start rounded-sm gap-x-4 text-sm"
+                    className="px-3 flex items-center justify-start rounded-sm gap-x-4 text-sm"
                     onClick={() => createFile()}
                 >
                     <CirclePlus className="size-3 text-indigo-700" />

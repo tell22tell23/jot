@@ -4,6 +4,27 @@ import { compressToUTF16, decompressFromUTF16 } from 'lz-string';
 import { v4 as uuidv4 } from 'uuid';
 import { type FileMeta, FileSchema, type File } from '@/types';
 
+const createFile = (files: FileMeta[], fileId: string, now: number): File => {
+    const untitledFiles = files
+    .map(f => f.title)
+    .filter(title => /^Untitled(-\d+)?$/.test(title));
+
+    // Extract numbers from existing Untitled titles
+    const numbers = untitledFiles.map(title => {
+        const match = title.match(/Untitled-(\d+)/);
+        return match ? parseInt(match[1], 10) : 0;
+    });
+
+    const maxNumber = numbers.length ? Math.max(...numbers) : 0;
+    const newNumber = maxNumber + 1;
+    return {
+        id: fileId,
+        title: `Untitled-${newNumber}`,
+        content: '',
+        createdAt: now,
+        updatedAt: now,
+    };
+}
 
 interface FileStore {
     files: { [fileId: string]: string };
@@ -66,13 +87,8 @@ export const useFileStore = create<FileStore>()(
             createFile: () => {
                 const fileId = uuidv4();
                 const now = Date.now();
-                const newFile: File = {
-                    id: fileId,
-                    title: `File ${now}`,
-                    content: '',
-                    createdAt: now,
-                    updatedAt: now,
-                };
+                const files = get().getFileList();
+                const newFile = createFile(files, fileId, now);
                 const compressedContent = compressToUTF16(JSON.stringify(newFile));
                 set((state) => ({
                     files: {
@@ -94,13 +110,8 @@ export const useFileStore = create<FileStore>()(
                 if (!state || !state.files || Object.keys(state.files).length > 0) return;
                 const now = Date.now();
                 const fileId = uuidv4();
-                const newFile: File = {
-                    id: fileId,
-                    title: `File ${now}`,
-                    content: '',
-                    createdAt: now,
-                    updatedAt: now,
-                };
+                const files = state.getFileList();
+                const newFile = createFile(files, fileId, now);
                 const compressed = compressToUTF16(JSON.stringify(newFile));
                 state.files = { [fileId]: compressed };
                 state.currentFileId = fileId;
