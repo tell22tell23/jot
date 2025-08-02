@@ -5,11 +5,18 @@ import { cn } from "@/lib/utils";
 
 export default function TextArea() {
     const { font } = useFontStore();
-    console.log(font);
     return (
-        <textarea
-            style={{ fontFamily: font === "sans" ? "var(--font-geist-sans)" : font === "serif" ? "var(--font-source-serif)" : "var(--font-geist-mono)" }}
-            className={cn("light:bg-transparent dark:bg-transparent shadow-none focus-visible:outline-0 focus-visible:ring-0 rounded-none border-none w-full h-full p-4 resize-none")}
-        />
+        <div className="overflow-hidden h-full">
+            <div className="h-full relative shadow-inner-border rounded-sm bg-card">
+                <div className="absolute origin-top-right bg-background w-[200px] h-9 right-0 top-0 border-l border-l-border border-b border-b-border rounded-bl-sm">
+                    <div className="absolute bg-background w-2 h-2 top-0 -left-2">
+                        <div className="w-full h-full rounded-tr-full bg-card border-t border-r border-t-border border-r-border"/>
+                    </div>
+                    <div className="absolute bg-background w-2 h-2 -bottom-2 right-0">
+                        <div className="w-full h-full rounded-tr-full bg-card border-t border-r border-t-border border-r-border"/>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
