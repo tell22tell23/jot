@@ -20,6 +20,7 @@ const createFile = (files: FileMeta[], fileId: string, now: number): File => {
     return {
         id: fileId,
         title: `Untitled-${newNumber}`,
+        favorite: false,
         content: '',
         createdAt: now,
         updatedAt: now,
@@ -33,7 +34,7 @@ interface FileStore {
     setFileContent: (fileId: string, file: File) => void;
     getFileContent: (fileId: string) => File | null;
     getFileList: () => FileMeta[];
-    createFile: () => void;
+    createFile: () => FileMeta;
     renameFile: (fileId: string, newTitle: string) => void;
     deleteFile: (fileId: string) => void;
     fileExists: (title: string) => boolean;
@@ -81,6 +82,7 @@ export const useFileStore = create<FileStore>()(
                         return {
                             id,
                             title: file?.title ?? "Untitled",
+                            favorite: file?.favorite ?? false,
                             updatedAt: file?.updatedAt ?? 0,
                         };
                     })
@@ -98,6 +100,13 @@ export const useFileStore = create<FileStore>()(
                         [fileId]: compressedContent,
                     },
                 }));
+
+                return {
+                    id: fileId,
+                    title: newFile.title,
+                    favorite: newFile.favorite,
+                    updatedAt: newFile.updatedAt,
+                };
             },
             renameFile: (fileId, newTitle) => {
                 const fileContent = get().getFileContent(fileId);

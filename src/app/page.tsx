@@ -12,7 +12,7 @@ export default function Home() {
                 </p>
             </div>
 
-            <div className="h-full hidden md:flex items-stretch justify-center px-4">
+            <div className="h-full hidden md:flex items-stretch justify-center px-4 gap-x-2">
                 <Sidebar />
                 <section className="max-w-2xl mx-auto h-full w-full flex items-stretch flex-col pt-6">
                     <TextArea />
