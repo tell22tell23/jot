@@ -36,7 +36,7 @@ export function Sidebar() {
 
     return (
         <section className="h-full pt-10">
-            <div className="flex flex-col gap-y-2 h-full">
+            <div className="flex flex-col gap-y-2 h-full w-[280px]">
                 { files.length > 0 ?
                     files.map((file) => (
                         <ContextMenu
@@ -46,7 +46,7 @@ export function Sidebar() {
                                 onClick={() => setCurrentFileId(file.id)}
                                 className="hover:bg-accent/30 px-3 py-2 flex items-center justify-between rounded-sm text-sm cursor-pointer gap-x-4"
                             >
-                                <div className="flex items-center gap-x-4">
+                                <div className="flex items-center gap-x-4 w-full min-w-0">
                                     <File
                                         className={
                                             cn(
@@ -70,23 +70,24 @@ export function Sidebar() {
                                             style={{ caretColor: 'auto' }}
                                         />
                                     ) : (
-                                        <span className="truncate">{file.title}</span>
+                                        <span className="truncate flex-shrink">{file.title}</span>
                                     )}
                                 </div>
-                                <div className="flex items-center gap-x-2">
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="p-1 size-6 rounded-sm"
-                                        onClick={() => deleteFile(file.id)}
-                                    >
-                                        <Trash2
-                                            className={cn(
-                                                "size-3 text-red-500",
-                                            )}
-                                        />
-                                    </Button>
-                                </div>
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="p-1 size-6 rounded-sm"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteFile(file.id)
+                                    }}
+                                >
+                                    <Trash2
+                                        className={cn(
+                                            "size-3 text-red-500",
+                                        )}
+                                    />
+                                </Button>
                             </ContextMenuTrigger>
                             <ContextMenuContent>
                                 <ContextMenuItem
