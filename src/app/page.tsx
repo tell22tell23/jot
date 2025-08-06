@@ -8,7 +8,7 @@ export default function Home() {
             <div className="h-full md:hidden flex items-center justify-center flex-col gap-4 px-4">
                 <h1 className="text-2xl font-bold">Go to desktop.</h1>
                 <p className="text-md text-muted-foreground text-center">
-                    I don't have time for mobile responsiveness, I have a life.
+                    I don&apos;t have time for mobile responsiveness, I have a life.
                 </p>
             </div>
 

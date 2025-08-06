@@ -111,7 +111,7 @@ export function Sidebar() {
                     ))
                     : (
                         <div className="text-center text-muted-foreground py-4 text-sm">
-                            No files available. Click "New File" to create one.
+                            No files available. Click &quot;New File&quot; to create one.
                         </div>
                     )}
                 <Button

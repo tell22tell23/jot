@@ -14,7 +14,8 @@ import { type Font } from "@/types";
 import { Slider } from "../ui/slider";
 import { useFontSize } from "@/hooks/use-font-size";
 
-const capitalize = (str: string) => {
+const capitalize = (str?: string) => {
+    if (!str) return "";
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 

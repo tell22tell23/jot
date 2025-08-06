@@ -69,7 +69,7 @@ export const useFileStore = create<FileStore>()(
                     if (!jsonContent) return null;
                     const parsedContent = JSON.parse(jsonContent);
                     return FileSchema.parse(parsedContent);
-                } catch (error: any) {
+                } catch (error) {
                     console.error('Error decompressing file content:', error);
                     return null;
                 }
@@ -127,7 +127,7 @@ export const useFileStore = create<FileStore>()(
             },
             deleteFile: (fileId) => {
                 set((state) => {
-                    const { [fileId]: _, ...remainingFiles } = state.files;
+                    const { [fileId]: _disgarded, ...remainingFiles } = state.files;
                     return { files: remainingFiles };
                 });
             },
