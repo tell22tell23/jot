@@ -16,7 +16,7 @@ export default function Textarea() {
     const file = getFileContent(currentFileId);
 
     return (
-        <div className="overflow-hidden h-full">
+        <div className="w-full overflow-hidden h-full">
             <div className="h-full relative shadow-inner-border rounded-sm bg-card pt-9">
                 <div className="absolute origin-top-right bg-background w-[200px] h-9 right-0 top-0 border-l border-l-border border-b border-b-border rounded-bl-sm flex items-center justify-start px-4">
                     <span className="truncate text-sm">{file?.title}</span>
